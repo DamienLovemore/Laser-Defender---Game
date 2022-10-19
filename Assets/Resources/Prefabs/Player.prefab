@@ -80,7 +80,7 @@ MonoBehaviour:
   paddingLeft: 0.5
   paddingRight: 0.5
   paddingTop: 3
-  paddingBottom: 2
+  paddingBottom: 1
 --- !u!1 &8896741581802708542
 GameObject:
   m_ObjectHideFlags: 0
