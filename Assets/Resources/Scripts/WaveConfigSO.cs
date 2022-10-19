@@ -8,6 +8,12 @@ public class WaveConfigSO : ScriptableObject
     [SerializeField] private List<GameObject> enemyPrefabs;
     [SerializeField] private Transform pathPrefab;
     [SerializeField] private float moveSpeed = 5f;
+    //Time between spawns
+    [SerializeField] private float timeEnemySpawns = 1f;
+    //Adds some random to our spawn times
+    [SerializeField] private float spawnTimeVariance = 0f;
+    //The minimum value that the time spawn cannot get lower
+    [SerializeField] private float minimumSpawnTime = 0.2f;
 
     //Gets how much enemies are being instantiated in 
     //currently in this wave
@@ -63,5 +69,18 @@ public class WaveConfigSO : ScriptableObject
         moveSpeed = this.moveSpeed;
 
         return moveSpeed;
+    }
+
+    //Gets the random time for which the new enemy will spawn
+    public float GetRandomSpawnTime()
+    {
+        float returnValue;
+
+        //Gets a random spawn delay for the new enemy
+        returnValue = Random.Range(timeEnemySpawns - spawnTimeVariance, timeEnemySpawns + spawnTimeVariance);
+
+        //Makes sure the new value is not lower than the minimumValue,
+        //and not higher than the max float value
+        return Mathf.Clamp(returnValue, minimumSpawnTime, float.MaxValue);
     }
 }

@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] WaveConfigSO currentWave;
+    [SerializeField] private List<WaveConfigSO> waveConfigs;
+    [SerializeField] private float timeBetweenWaves = 0f;
+    private WaveConfigSO currentWave;
 
     void Start()
     {
-        SpawnEnemies();
+        StartCoroutine(SpawnEnemies());
     }
 
     //Gets the wave that the game is currently playing
@@ -22,12 +24,24 @@ public class EnemySpawner : MonoBehaviour
     }
 
     //Spawn all the enemies of this wave
-    private void SpawnEnemies()
+    private IEnumerator SpawnEnemies()
     {
-        for(int index = 0; index < currentWave.GetEnemyCount(); index++)
+        foreach (WaveConfigSO wave in waveConfigs)
         {
-            //Creates a game object from a prefab, in that position, with that rotation, and the specified parent
-            Instantiate(currentWave.GetEnemyPrefab(index), currentWave.GetStartingWaypoint().position, Quaternion.identity, transform);
-        }        
+            //Sets the current wave that we are playing
+            currentWave = wave;
+
+            //Spawns all the enemies in that wave
+            for (int index = 0; index < currentWave.GetEnemyCount(); index++)
+            {
+                //Creates a game object from a prefab, in that position, with that rotation, and the specified parent
+                Instantiate(currentWave.GetEnemyPrefab(index), currentWave.GetStartingWaypoint().position, Quaternion.identity, transform);
+                //Waits for a random new spawn time before, instantiating another ship
+                yield return new WaitForSeconds(currentWave.GetRandomSpawnTime());
+            }
+
+            //Time before starting a new wave
+            yield return new WaitForSeconds(timeBetweenWaves);
+        }         
     }
 }
