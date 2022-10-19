@@ -5,8 +5,30 @@ using UnityEngine;
 [CreateAssetMenu(menuName="Wave Config", fileName="New Wave Config")]
 public class WaveConfigSO : ScriptableObject
 {
+    [SerializeField] private List<GameObject> enemyPrefabs;
     [SerializeField] private Transform pathPrefab;
     [SerializeField] private float moveSpeed = 5f;
+
+    //Gets how much enemies are being instantiated in 
+    //currently in this wave
+    public int GetEnemyCount()
+    {
+        int returnValue;
+
+        returnValue = this.enemyPrefabs.Count;
+
+        return returnValue;
+    }
+
+    //Gets an enemy of this wave in a specified position
+    public GameObject GetEnemyPrefab(int index)
+    {
+        GameObject returnValue;
+
+        returnValue = this.enemyPrefabs[index];
+
+        return returnValue;
+    }
 
     //Gets the first waypoint of this path
     public Transform GetStartingWaypoint()
