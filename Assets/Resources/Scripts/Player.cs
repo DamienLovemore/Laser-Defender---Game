@@ -16,6 +16,13 @@ public class Player : MonoBehaviour
     private Vector2 minBounds;
     private Vector2 maxBounds;
 
+    private Shooter shooterHandle;
+
+    void Awake()
+    {
+        shooterHandle = GetComponent<Shooter>();    
+    }
+
     void Start()
     {
         InitBounds();
@@ -61,6 +68,16 @@ public class Player : MonoBehaviour
     void OnMove(InputValue value)
     {
         rawInput = value.Get<Vector2>();
-        Debug.Log(rawInput);
+    }
+
+    void OnFire(InputValue value)
+    {
+        //If the script was able to get the shooter instance
+        if(shooterHandle != null)
+        {
+            //Keeps firing while the space key is pressed,
+            //stop after releasing
+            shooterHandle.SetIsFiring(value.isPressed);
+        }
     }
 }

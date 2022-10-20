@@ -40,7 +40,8 @@ public class EnemySpawner : MonoBehaviour
                 for (int index = 0; index < currentWave.GetEnemyCount(); index++)
                 {
                     //Creates a game object from a prefab, in that position, with that rotation, and the specified parent
-                    Instantiate(currentWave.GetEnemyPrefab(index), currentWave.GetStartingWaypoint().position, Quaternion.identity, transform);
+                    //(180 degrees on z, is for making the bullets face down)
+                    Instantiate(currentWave.GetEnemyPrefab(index), currentWave.GetStartingWaypoint().position, Quaternion.Euler(0, 0, 180), transform);
                     //Waits for a random new spawn time before, instantiating another ship
                     yield return new WaitForSeconds(currentWave.GetRandomSpawnTime());
                 }
