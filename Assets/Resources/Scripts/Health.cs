@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    [SerializeField] bool isPlayer;
     [SerializeField] private int health  = 50;
+    [SerializeField] int scorePointsWorth = 100;
     [SerializeField] private ParticleSystem hitEffect;
 
     //To apply the camera shake to just the player
@@ -12,11 +14,24 @@ public class Health : MonoBehaviour
     private CameraShake cameraShakeHandler;
 
     private AudioPlayer audioPlayer;
+    private ScoreKeeper scoreHandler;
 
     void Awake()
     {
         cameraShakeHandler = Camera.main.GetComponent<CameraShake>();
         audioPlayer = FindObjectOfType<AudioPlayer>();
+        scoreHandler = FindObjectOfType<ScoreKeeper>();
+    }
+
+    //Method responsible for returning this entity
+    //actual health
+    public int GetHealthPoints()
+    {
+        int returnValue;
+
+        returnValue = this.health;
+
+        return returnValue;
     }
 
     //When an entity triggers (makes contact) with another, we do the collision damage
@@ -51,8 +66,20 @@ public class Health : MonoBehaviour
         //If it runs out of health, then it should die
         if (health == 0)
         {
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    //What should happen when a enemy or the player dies
+    private void Die()
+    {
+        if(!this.isPlayer)
+        {
+            scoreHandler.AddScore(scorePointsWorth);
+        }
+        //It should be destroyed when it dies, whether
+        //it is a enemy or a player
+        Destroy(gameObject);
     }
 
     //When the entity dies, it plays the explosion animation
