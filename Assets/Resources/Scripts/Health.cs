@@ -5,6 +5,7 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] private int health  = 50;
+    [SerializeField] private ParticleSystem hitEffect;
 
     //When an entity triggers (makes contact) with another, we do the collision damage
     void OnTriggerEnter2D(Collider2D collision)
@@ -16,10 +17,13 @@ public class Health : MonoBehaviour
         if (damageDealer != null)
         {
             TakeDamage(damageDealer.GetDamage());
+            PlayHitEffect();
             damageDealer.Hit();
         }
     }
 
+    //Responsible for making the player takes damage, and dies when its
+    //health reaches zero
     private void TakeDamage(int damageAmount)
     {
         int newHealth;
@@ -34,6 +38,20 @@ public class Health : MonoBehaviour
         if (health == 0)
         {
             Destroy(gameObject);
+        }
+    }
+
+    //When the entity dies, it plays the explosion animation
+    private void PlayHitEffect()
+    {
+        //Verifies if the explosion entity is added in this entity
+        if(hitEffect != null)
+        {
+            //Creates the explosion effect
+            ParticleSystem instance = Instantiate(hitEffect, transform.position, Quaternion.identity);
+            //Destroys the explosion object after the time that
+            //it should already plays its effect
+            Destroy(instance.gameObject, instance.main.duration + instance.main.startLifetime.constantMax);
         }
     }
 }
