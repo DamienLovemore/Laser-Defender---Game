@@ -11,9 +11,12 @@ public class Health : MonoBehaviour
     [SerializeField] private bool applyCameraShake;
     private CameraShake cameraShakeHandler;
 
+    private AudioPlayer audioPlayer;
+
     void Awake()
     {
         cameraShakeHandler = Camera.main.GetComponent<CameraShake>();
+        audioPlayer = FindObjectOfType<AudioPlayer>();
     }
 
     //When an entity triggers (makes contact) with another, we do the collision damage
@@ -27,6 +30,7 @@ public class Health : MonoBehaviour
         {
             TakeDamage(damageDealer.GetDamage());
             PlayHitEffect();
+            audioPlayer.PlayTakeDamageClip();
             ShakeCamera();
             damageDealer.Hit();
         }
