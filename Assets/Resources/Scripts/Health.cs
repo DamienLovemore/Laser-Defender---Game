@@ -7,6 +7,15 @@ public class Health : MonoBehaviour
     [SerializeField] private int health  = 50;
     [SerializeField] private ParticleSystem hitEffect;
 
+    //To apply the camera shake to just the player
+    [SerializeField] private bool applyCameraShake;
+    private CameraShake cameraShakeHandler;
+
+    void Awake()
+    {
+        cameraShakeHandler = Camera.main.GetComponent<CameraShake>();
+    }
+
     //When an entity triggers (makes contact) with another, we do the collision damage
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -18,6 +27,7 @@ public class Health : MonoBehaviour
         {
             TakeDamage(damageDealer.GetDamage());
             PlayHitEffect();
+            ShakeCamera();
             damageDealer.Hit();
         }
     }
@@ -52,6 +62,16 @@ public class Health : MonoBehaviour
             //Destroys the explosion object after the time that
             //it should already plays its effect
             Destroy(instance.gameObject, instance.main.duration + instance.main.startLifetime.constantMax);
+        }
+    }
+
+    private void ShakeCamera()
+    {
+        //If the script that handles the camera shaking is added to the camera
+        //and this entity is the player and not the enemy
+        if ((cameraShakeHandler != null) && (applyCameraShake))
+        {
+            cameraShakeHandler.Play();
         }
     }
 }
