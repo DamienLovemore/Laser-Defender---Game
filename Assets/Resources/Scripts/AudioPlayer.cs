@@ -30,6 +30,8 @@ public class AudioPlayer : MonoBehaviour
         {
             Vector3 cameraPosition = Camera.main.transform.position;
 
+            //Plays a sound at the position of the audio listener (Camera) with
+            //the specified audio volume
             AudioSource.PlayClipAtPoint(soundClip, cameraPosition, soundVolume);
         }
     }
