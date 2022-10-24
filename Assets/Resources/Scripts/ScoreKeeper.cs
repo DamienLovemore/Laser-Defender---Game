@@ -6,6 +6,27 @@ public class ScoreKeeper : MonoBehaviour
 {
     private int score;
 
+    void Awake()
+    {
+        ManageSingleton();
+    }
+
+    //Responsible for keeping just one ScoreKeeper for the game,
+    //that persists across all the screens
+    private void ManageSingleton()
+    {
+        int instanceCount = FindObjectsOfType(GetType()).Length;
+        if (instanceCount > 1)
+        {
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
     //Method responsible for getting the actual
     //score of the game
     public int GetScore()

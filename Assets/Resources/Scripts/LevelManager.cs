@@ -7,6 +7,13 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private float loadDelay = 2f;
 
+    private ScoreKeeper scoreKeeper;
+
+    void Awake()
+    {
+        scoreKeeper = FindObjectOfType<ScoreKeeper>();
+    }
+
     //Loads the first scene where the user decides to play
     //or exit the game
     public void LoadMainMenu()
@@ -17,6 +24,7 @@ public class LevelManager : MonoBehaviour
     //Loads the scene where the player plays the game
     public void LoadGame()
     {
+        scoreKeeper.ResetScore();
         SceneManager.LoadScene("Game");
     }
 

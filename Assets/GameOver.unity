@@ -1150,10 +1150,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioPlayer
       objectReference: {fileID: 0}
-    - target: {fileID: 2855123500453003117, guid: b782ef00ab8e1104aa34432dff3272c7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2855123500453003118, guid: b782ef00ab8e1104aa34432dff3272c7, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1513,7 +1509,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1933060031}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ee9284bc512ca94695db552dda35f62, type: 3}
+  m_Script: {fileID: 11500000, guid: db7940f7e04060141997085fa6a0c64b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 1994941394}
