@@ -15,12 +15,14 @@ public class Health : MonoBehaviour
 
     private AudioPlayer audioPlayer;
     private ScoreKeeper scoreHandler;
+    private LevelManager levelManager;
 
     void Awake()
     {
         cameraShakeHandler = Camera.main.GetComponent<CameraShake>();
         audioPlayer = FindObjectOfType<AudioPlayer>();
         scoreHandler = FindObjectOfType<ScoreKeeper>();
+        levelManager = FindObjectOfType<LevelManager>();
     }
 
     //Method responsible for returning this entity
@@ -73,12 +75,18 @@ public class Health : MonoBehaviour
     //What should happen when a enemy or the player dies
     private void Die()
     {
+        //If the thing that is dying isn't the player
         if(!this.isPlayer)
         {
-            scoreHandler.AddScore(scorePointsWorth);
+            //Add score to the player score
+            scoreHandler.AddScore(scorePointsWorth);            
         }
-        //It should be destroyed when it dies, whether
-        //it is a enemy or a player
+        //If it is then go to the Game Over screen
+        else
+        {
+            levelManager.LoadGameOver();
+        }
+        //Destroys the entity (enemy ship or player)
         Destroy(gameObject);
     }
 
