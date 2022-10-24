@@ -83,7 +83,7 @@ MonoBehaviour:
   moveSpeed: 5
   paddingLeft: 0.5
   paddingRight: 0.5
-  paddingTop: 3
+  paddingTop: 5
   paddingBottom: 1
 --- !u!50 &5622058540477886776
 Rigidbody2D:
